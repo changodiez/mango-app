@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* 🔥 Elimina el highlight azul al tocar */
 }
 
 :root {
@@ -25,12 +26,14 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', sans-serif;
   background-color: var(--background);
   color: var(--text-primary);
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 16px; /* 🔥 Tamaño de fuente base más grande para móvil */
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -39,13 +42,14 @@ html {
 
 .app {
   min-height: 100vh;
+  min-height: -webkit-fill-available; /* 🔥 Para Safari mobile */
 }
 
-/* Header/Navigation */
+/* Header/Navigation - Optimizado para touch */
 .app-navigation {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1.5rem; /* 🔥 Más padding para touch */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,10 +74,14 @@ html {
 .nav-link {
   color: var(--text-secondary);
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem; /* 🔥 Botones más grandes para touch */
   border-radius: var(--radius-sm);
   transition: all 0.2s ease;
   font-weight: 500;
+  font-size: 0.9rem; /* 🔥 Texto ligeramente más grande */
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
 }
 
 .nav-link:hover {
@@ -98,11 +106,14 @@ html {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text-secondary);
-  padding: 0.375rem 0.75rem;
+  padding: 0.75rem 1.25rem; /* 🔥 Botón más grande */
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 0.875rem;
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
 }
 
 .logout-btn:hover {
@@ -140,13 +151,15 @@ html {
   gap: 1rem;
 }
 
-/* Auth Styles */
+/* Auth Styles - Optimizado para móvil */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 1rem; /* 🔥 Padding para evitar bordes */
 }
 
 .auth-card {
@@ -155,7 +168,7 @@ html {
   border-radius: var(--radius);
   box-shadow: var(--shadow-hover);
   width: 100%;
-  max-width: 380px;
+  max-width: 400px; /* 🔥 Un poco más ancho */
   border: 1px solid var(--border);
 }
 
@@ -164,18 +177,19 @@ html {
   text-align: center;
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.75rem; /* 🔥 Título más grande */
 }
 
 .auth-card input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem; /* 🔥 Inputs más grandes */
   margin-bottom: 1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande en inputs */
   transition: border-color 0.2s ease;
   background: var(--surface);
+  min-height: 50px; /* 🔥 Altura mínima para touch */
 }
 
 .auth-card input:focus {
@@ -186,15 +200,16 @@ html {
 
 .auth-card button {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem; /* 🔥 Botón más grande */
   background: var(--primary);
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-weight: 500;
+  font-weight: 600; /* 🔥 Texto más grueso */
+  min-height: 50px; /* 🔥 Altura mínima para touch */
 }
 
 .auth-card button:hover {
@@ -208,7 +223,11 @@ html {
   text-decoration: none;
   cursor: pointer;
   margin-left: 0.25rem;
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
+  padding: 0.5rem;
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: inline-flex;
+  align-items: center;
 }
 
 .link-btn:hover {
@@ -224,7 +243,7 @@ html {
   margin-bottom: 1.5rem;
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.75rem; /* 🔥 Título más grande */
 }
 
 .summary-cards {
@@ -274,12 +293,12 @@ html {
 }
 
 .summary-card .amount {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem; /* 🔥 Números más grandes */
+  font-weight: 700; /* 🔥 Más grueso para mejor legibilidad */
   color: var(--text-primary);
 }
 
-/* Transaction Form */
+/* Transaction Form - Optimizado para touch */
 .transaction-form {
   background: var(--surface);
   padding: 1.5rem;
@@ -294,54 +313,59 @@ html {
   margin-bottom: 1.25rem;
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1.25rem; /* 🔥 Título más grande */
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem; /* 🔥 Más espacio entre campos */
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
+  margin-bottom: 0.75rem; /* 🔥 Más espacio */
+  font-weight: 600; /* 🔥 Labels más prominentes */
+  color: var(--text-primary); /* 🔥 Color más oscuro */
+  font-size: 0.95rem; /* 🔥 Texto más grande */
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
+  padding: 1rem; /* 🔥 Inputs más grandes */
+  border: 2px solid var(--border); /* 🔥 Borde más grueso */
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   background: var(--surface);
   transition: border-color 0.2s ease;
+  min-height: 50px; /* 🔥 Altura mínima para touch */
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(54, 137, 230, 0.1);
+  box-shadow: 0 0 0 3px rgba(54, 137, 230, 0.15); /* 🔥 Shadow más visible */
 }
 
 .type-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0.75rem; /* 🔥 Más espacio entre botones */
 }
 
 .type-btn {
-  padding: 0.75rem;
-  border: 1px solid var(--border);
+  padding: 1rem; /* 🔥 Botones más grandes */
+  border: 2px solid var(--border); /* 🔥 Borde más grueso */
   background: var(--surface);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 1rem; /* 🔥 Texto más grande */
+  font-weight: 600; /* 🔥 Texto más grueso */
+  min-height: 50px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .type-btn.active.income {
@@ -358,19 +382,20 @@ html {
 
 .submit-btn {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem; /* 🔥 Botón más grande */
   background: var(--primary);
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 1.1rem; /* 🔥 Texto más grande */
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   transition: background-color 0.2s ease;
-  font-weight: 500;
+  font-weight: 700; /* 🔥 Texto más grueso */
+  min-height: 55px; /* 🔥 Altura mínima para touch */
 }
 
 .submit-btn:hover {
@@ -387,6 +412,7 @@ html {
   text-align: center;
   padding: 3rem;
   color: var(--text-muted);
+  font-size: 1.1rem; /* 🔥 Texto más grande */
 }
 
 .charts-grid {
@@ -410,7 +436,7 @@ html {
   margin-bottom: 1rem;
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1.25rem; /* 🔥 Título más grande */
 }
 
 .chart-container .recharts-responsive-container {
@@ -422,6 +448,7 @@ html {
   text-align: center;
   padding: 3rem;
   color: var(--text-muted);
+  font-size: 1.1rem; /* 🔥 Texto más grande */
 }
 
 /* Transaction List Page */
@@ -437,16 +464,16 @@ html {
   color: var(--text-primary);
   margin-bottom: 0.5rem;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.75rem; /* 🔥 Título más grande */
 }
 
 .page-header p {
   color: var(--text-secondary);
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
 }
 
-/* Filters & Search */
+/* Filters & Search - Optimizado para touch */
 .filters-section {
   display: flex;
   gap: 1rem;
@@ -459,26 +486,27 @@ html {
   display: flex;
   align-items: center;
   background: var(--surface);
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem; /* 🔥 Más padding */
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border); /* 🔥 Borde más grueso */
   flex: 1;
   min-width: 250px;
   max-width: 400px;
   transition: border-color 0.2s ease;
+  min-height: 50px; /* 🔥 Altura mínima para touch */
 }
 
 .search-box:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(54, 137, 230, 0.1);
+  box-shadow: 0 0 0 3px rgba(54, 137, 230, 0.15);
 }
 
 .search-box input {
   border: none;
   outline: none;
-  padding: 0.25rem;
+  padding: 0.5rem; /* 🔥 Más padding */
   width: 100%;
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   background: transparent;
 }
 
@@ -488,14 +516,17 @@ html {
 }
 
 .filter-btn {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
+  padding: 0.75rem 1.25rem; /* 🔥 Botones más grandes */
+  border: 2px solid var(--border); /* 🔥 Borde más grueso */
   background: var(--surface);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.95rem; /* 🔥 Texto más grande */
+  font-weight: 600; /* 🔥 Texto más grueso */
+  min-height: 50px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
 }
 
 .filter-btn.active {
@@ -514,7 +545,7 @@ html {
 
 .stat-card {
   background: var(--surface);
-  padding: 1rem;
+  padding: 1.25rem; /* 🔥 Más padding */
   border-radius: var(--radius);
   text-align: center;
   box-shadow: var(--shadow);
@@ -523,20 +554,21 @@ html {
 
 .stat-number {
   display: block;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem; /* 🔥 Números más grandes */
+  font-weight: 700; /* 🔥 Más grueso */
   color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
 .stat-label {
   color: var(--text-secondary);
-  font-size: 0.75rem;
+  font-size: 0.85rem; /* 🔥 Texto ligeramente más grande */
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 500; /* 🔥 Más grueso */
 }
 
-/* Transactions List */
+/* Transactions List - Optimizado para touch */
 .transactions-container {
   background: var(--surface);
   border-radius: var(--radius);
@@ -550,18 +582,23 @@ html {
   padding: 3rem;
   text-align: center;
   color: var(--text-muted);
+  font-size: 1.1rem; /* 🔥 Texto más grande */
 }
 
 .clear-filters-btn {
   background: var(--primary);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem; /* 🔥 Botón más grande */
   border-radius: var(--radius-sm);
   cursor: pointer;
   margin-top: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 1rem; /* 🔥 Texto más grande */
+  font-weight: 600; /* 🔥 Texto más grueso */
+  min-height: 50px; /* 🔥 Altura mínima para touch */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .transaction-row {
@@ -569,9 +606,10 @@ html {
   grid-template-columns: 1fr auto auto;
   gap: 1rem;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem; /* 🔥 Más padding */
   border-bottom: 1px solid var(--border-light);
   transition: background 0.2s ease;
+  min-height: 80px; /* 🔥 Altura mínima para filas */
 }
 
 .transaction-row:hover {
@@ -590,22 +628,23 @@ html {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.375rem;
+  margin-bottom: 0.5rem; /* 🔥 Más espacio */
   flex-wrap: wrap;
 }
 
 .category {
-  font-weight: 600;
+  font-weight: 700; /* 🔥 Más grueso */
   color: var(--text-primary);
   background: var(--border-light);
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem; /* 🔥 Más padding */
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  font-size: 0.85rem; /* 🔥 Texto más grande */
 }
 
 .description {
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
+  font-weight: 500; /* 🔥 Más grueso */
 }
 
 .transaction-meta {
@@ -616,18 +655,19 @@ html {
 
 .date {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.85rem; /* 🔥 Texto más grande */
+  font-weight: 500; /* 🔥 Más grueso */
 }
 
 .type-badge {
   background: var(--border-light);
   color: var(--text-secondary);
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.75rem; /* 🔥 Más padding */
   border-radius: var(--radius-sm);
-  font-size: 0.625rem;
+  font-size: 0.75rem; /* 🔥 Texto más grande */
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: 500;
+  font-weight: 600; /* 🔥 Más grueso */
 }
 
 .transaction-actions {
@@ -639,29 +679,34 @@ html {
 
 .amount.positive {
   color: var(--success);
-  font-weight: 600;
-  font-size: 0.875rem;
+  font-weight: 700; /* 🔥 Más grueso */
+  font-size: 1rem; /* 🔥 Texto más grande */
 }
 
 .amount.negative {
   color: var(--error);
-  font-weight: 600;
-  font-size: 0.875rem;
+  font-weight: 700; /* 🔥 Más grueso */
+  font-size: 1rem; /* 🔥 Texto más grande */
 }
 
 .action-buttons {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem; /* 🔥 Más espacio entre botones */
 }
 
 .edit-btn, .delete-btn {
   background: none;
   border: none;
-  padding: 0.375rem;
+  padding: 0.75rem; /* 🔥 Botones más grandes */
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background 0.2s ease;
   color: var(--text-muted);
+  min-width: 44px; /* 🔥 Ancho mínimo para touch */
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .edit-btn:hover {
@@ -683,20 +728,24 @@ html {
 }
 
 .edit-form input {
-  padding: 0.5rem;
-  border: 1px solid var(--border);
+  padding: 0.75rem; /* 🔥 Inputs más grandes */
+  border: 2px solid var(--border); /* 🔥 Borde más grueso */
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   background: var(--surface);
+  min-height: 44px; /* 🔥 Altura mínima para touch */
 }
 
 .save-btn, .cancel-btn {
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem; /* 🔥 Botones más grandes */
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.85rem; /* 🔥 Texto más grande */
+  font-weight: 600; /* 🔥 Texto más grueso */
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
 }
 
 .save-btn {
@@ -728,7 +777,7 @@ html {
 .category-header h4 {
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1.25rem; /* 🔥 Título más grande */
   margin: 0;
 }
 
@@ -737,9 +786,14 @@ html {
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  padding: 0.5rem;
+  padding: 0.75rem; /* 🔥 Botón más grande */
   cursor: pointer;
   transition: background-color 0.2s ease;
+  min-width: 44px; /* 🔥 Ancho mínimo para touch */
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-category-btn:hover {
@@ -755,16 +809,17 @@ html {
 
 .category-form input,
 .category-form select {
-  padding: 0.5rem;
-  border: 1px solid var(--border);
+  padding: 0.75rem; /* 🔥 Inputs más grandes */
+  border: 2px solid var(--border); /* 🔥 Borde más grueso */
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   background: var(--surface);
+  min-height: 44px; /* 🔥 Altura mínima para touch */
 }
 
 .category-form input[type="color"] {
-  width: 40px;
-  height: 32px;
+  width: 50px; /* 🔥 Más grande */
+  height: 44px; /* 🔥 Más grande */
   padding: 2px;
 }
 
@@ -782,7 +837,7 @@ html {
 .category-group h5 {
   margin: 0 0 0.5rem 0;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -792,9 +847,10 @@ html {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem; /* 🔥 Más padding */
   border-radius: var(--radius-sm);
   transition: background 0.2s ease;
+  min-height: 60px; /* 🔥 Altura mínima para touch */
 }
 
 .category-item:hover {
@@ -802,8 +858,8 @@ html {
 }
 
 .color-dot {
-  width: 12px;
-  height: 12px;
+  width: 16px; /* 🔥 Más grande */
+  height: 16px; /* 🔥 Más grande */
   border-radius: 50%;
   display: inline-block;
   flex-shrink: 0;
@@ -811,14 +867,15 @@ html {
 
 .category-name {
   flex: 1;
-  font-size: 0.875rem;
+  font-size: 1rem; /* 🔥 Texto más grande */
   color: var(--text-primary);
+  font-weight: 500; /* 🔥 Más grueso */
 }
 
 .category-actions {
   display: flex;
-  gap: 0.25rem;
-  opacity: 0;
+  gap: 0.5rem; /* 🔥 Más espacio */
+  opacity: 1; /* 🔥 Siempre visibles en móvil */
   transition: opacity 0.2s ease;
 }
 
@@ -829,11 +886,16 @@ html {
 .category-actions button {
   background: none;
   border: none;
-  padding: 0.25rem;
+  padding: 0.5rem; /* 🔥 Botones más grandes */
   border-radius: 3px;
   cursor: pointer;
   color: var(--text-muted);
   transition: all 0.2s ease;
+  min-width: 44px; /* 🔥 Ancho mínimo para touch */
+  min-height: 44px; /* 🔥 Altura mínima para touch */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-actions button:hover {
@@ -841,7 +903,7 @@ html {
   color: var(--text-primary);
 }
 
-/* Responsive Design */
+/* 🔥 Media Queries Específicos para Android/Móvil */
 @media (max-width: 1200px) {
   .app-container {
     padding: 1.25rem;
@@ -861,31 +923,36 @@ html {
 }
 
 @media (max-width: 768px) {
+  body {
+    font-size: 18px; /* 🔥 Texto aún más grande en móvil */
+  }
+  
   .app-container {
     padding: 1rem;
   }
   
   .app-navigation {
-    padding: 0.75rem 1rem;
+    padding: 1rem;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
   }
   
   .nav-links {
     justify-content: center;
     flex-wrap: wrap;
+    gap: 0.5rem;
   }
   
   .nav-user {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
     text-align: center;
   }
   
   .filters-section {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.75rem;
+    gap: 1rem;
   }
   
   .search-box {
@@ -896,31 +963,39 @@ html {
   .filter-buttons {
     justify-content: center;
     flex-wrap: wrap;
+    gap: 0.5rem;
   }
   
   .summary-cards {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 1rem;
   }
   
   .transaction-row {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 1rem;
     text-align: center;
+    padding: 1.5rem 1rem;
   }
   
   .transaction-actions {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
   
   .quick-stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 1rem;
+  }
+  
+  .category-actions {
+    opacity: 1; /* 🔥 Siempre visibles en móvil */
   }
   
   :root {
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.15);
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -930,7 +1005,7 @@ html {
   }
   
   .auth-card {
-    margin: 0.75rem;
+    margin: 0.5rem;
     padding: 1.5rem;
   }
   
@@ -941,7 +1016,7 @@ html {
   }
   
   .summary-card {
-    padding: 1.25rem;
+    padding: 1.5rem;
   }
   
   .quick-stats {
@@ -950,5 +1025,39 @@ html {
   
   .chart-container {
     min-height: 350px;
+    padding: 1rem;
+  }
+  
+  .transaction-row {
+    padding: 1.25rem 0.75rem;
+  }
+}
+
+/* 🔥 Estilos específicos para WebView en Android */
+@media (hover: none) and (pointer: coarse) {
+  /* Deshabilitar hover effects en dispositivos táctiles */
+  .summary-card:hover {
+    box-shadow: var(--shadow);
+  }
+  
+  .transaction-row:hover {
+    background: transparent;
+  }
+  
+  .nav-link:hover {
+    background: transparent;
+    color: var(--text-secondary);
+  }
+  
+  .nav-link.active:hover {
+    background: var(--primary);
+    color: white;
+  }
+}
+
+/* 🔥 Prevenir zoom en inputs en iOS */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important; /* 🔥 Previene zoom en iOS */
   }
 }
