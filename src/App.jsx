@@ -41,6 +41,7 @@ function Navigation() {
 
 function AppContent() {
   const { user } = useAuth()
+  const location = useLocation()
 
   if (!user) {
     return <Auth />
@@ -51,19 +52,10 @@ function AppContent() {
       <Navigation />
       
       <div className="app-container">
-        {/* Mover TransactionManager al Dashboard y Transactions */}
-        {location.pathname === '/' && (
-          <aside className="sidebar">
-            <TransactionManager />
-          </aside>
-        )}
-        
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/transactions" element={<TransactionList />} />
-          </Routes>
-        </main>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/transactions" element={<TransactionList />} />
+        </Routes>
       </div>
     </div>
   )
