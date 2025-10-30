@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
+import { Plus } from 'lucide-react'
 import { useTransactions } from '../hooks/useTransactions'
 import { TransactionManager } from './TransactionManager'
 
@@ -8,6 +9,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'
 export function Dashboard() {
   const { transactions, loading, refetch } = useTransactions()
   const [forceUpdate, setForceUpdate] = useState(0)
+  const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false)
 
   useEffect(() => {
     const handleTransactionAdded = () => {
@@ -42,64 +44,82 @@ export function Dashboard() {
 
   return (
     <div className="dashboard">
-      <div className="dashboard-with-sidebar">
-        <div className="dashboard-main">
-          <h2>Dashboard Financiero</h2>
-          
-          <div className="summary-cards">
-            <div className="summary-card income">
-              <h4>Total Ingresos</h4>
-              <span className="amount">${totalIncome.toFixed(2)}</span>
-            </div>
+      {/* Header del Dashboard con botón */}
+      <div className="dashboard-header">
+   
+        <button 
+          className="add-transaction-btn"
+          onClick={() => setIsTransactionModalOpen(true)}
+        >
+          <Plus size={20} />
+          Agregar Transacción
+        </button>
+      </div>
             
-            <div className="summary-card expense">
-              <h4>Total Gastos</h4>
-              <span className="amount">${totalExpenses.toFixed(2)}</span>
-            </div>
-            
-            <div className={`summary-card balance ${balance >= 0 ? 'positive' : 'negative'}`}>
-              <h4>Balance</h4>
-              <span className="amount">${balance.toFixed(2)}</span>
-            </div>
-          </div>
-
-          {expenseTransactions.length > 0 ? (
-            <div className="charts-grid">
-              <div className="chart-container">
-                <h4>🎯 Gastos por Categoría</h4>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={pieChartData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {pieChartData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(value) => [`$${value}`, 'Gasto']} />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          ) : (
-            <div className="no-data">
-              <p>No hay transacciones aún. ¡Agrega tu primera transacción!</p>
-            </div>
-          )}
+      <div className="summary-cards">
+      <div className={`summary-card balance ${balance >= 0 ? 'positive' : 'negative'}`}>
+          <h4>Balance</h4>
+          <span className="amount">${balance.toFixed(2)}</span>
         </div>
         
-        <aside className="dashboard-sidebar">
-          <TransactionManager />
-        </aside>
+        <div className="summary-card-container">
+        <div className="summary-card income">
+          <h4>Total Ingresos</h4>
+          <span className="amount">${totalIncome.toFixed(2)}</span>
+        </div>
+        
+        <div className="summary-card expense">
+          <h4>Total Gastos</h4>
+          <span className="amount">${totalExpenses.toFixed(2)}</span>
+        </div>
+        </div>
+
       </div>
+
+      {expenseTransactions.length > 0 ? (
+        <div className="charts-grid">
+          <div className="chart-container">
+            <h4>🎯 Gastos por Categoría</h4>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={pieChartData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {pieChartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => [`$${value}`, 'Gasto']} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      ) : (
+        <div className="no-data">
+          <p>No hay transacciones aún. ¡Agrega tu primera transacción!</p>
+          <button 
+            className="add-transaction-btn"
+            onClick={() => setIsTransactionModalOpen(true)}
+          >
+            <Plus size={20} />
+            Agregar Primera Transacción
+          </button>
+        </div>
+      )}
+
+      {/* Modal de TransactionManager */}
+      <TransactionManager 
+        isOpen={isTransactionModalOpen}
+        onClose={() => setIsTransactionModalOpen(false)}
+      />
     </div>
   )
 }

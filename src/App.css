@@ -247,15 +247,23 @@ html {
 }
 
 .summary-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.summary-card-container {
+  display: flex;
+  padding: 0.5rem;
+  flex-direction: row;
+  width: 100%;
+  gap: 2rem;
+  margin-bottom: 1rem;
 }
 
 .summary-card {
   background: var(--surface);
   padding: 1.5rem;
+  width: 100;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
@@ -1059,5 +1067,116 @@ html {
 @media screen and (max-width: 768px) {
   input, select, textarea {
     font-size: 16px !important; /* 🔥 Previene zoom en iOS */
+  }
+}
+
+/*MODAL */
+/* Dashboard Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-header h2 {
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+
+.dashboard-subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Botón de agregar transacción */
+.add-transaction-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 50px;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+
+.add-transaction-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.add-transaction-btn:active {
+  transform: translateY(0);
+}
+
+/* Estado cuando no hay datos */
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.no-data p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Responsive para el header del dashboard */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .dashboard-header > div {
+    margin-bottom: 1rem;
+  }
+  
+  .add-transaction-btn {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .no-data {
+    padding: 2rem 1rem;
+  }
+  
+  .no-data .add-transaction-btn {
+    width: auto;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .add-transaction-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .add-transaction-btn span {
+    display: none; /* Ocultar texto en móvil muy pequeño, solo icono */
   }
 }
