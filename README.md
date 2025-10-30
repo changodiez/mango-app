@@ -1,4 +1,4 @@
-# 💰 Finanzas Personales App
+# 💰 Mango App
 
 Una aplicación web para gestionar finanzas personales construida con React y Supabase.
 
@@ -17,8 +17,3 @@ Una aplicación web para gestionar finanzas personales construida con React y Su
 - **Gráficos:** Recharts
 - **Iconos:** Lucide React
 
-## 📦 Instalación
-
-1. Clona el repositorio:
-```bash
-git clone [tu-url-del-repo]
