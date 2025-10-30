@@ -1,14 +1,19 @@
 import { useState } from 'react'
-import { Edit3, Trash2, Search } from 'lucide-react'
+import { Edit3, Trash2, Search, Save, X } from 'lucide-react'
 import { useTransactions } from '../hooks/useTransactions'
-import { TransactionManager } from './TransactionManager' // 🔥 AGREGAR ESTA IMPORTACIÓN
+import { TransactionManager } from './TransactionManager'
 
 export function TransactionList() {
-  const { transactions, deleteTransaction, loading } = useTransactions()
+  const { transactions, deleteTransaction, updateTransaction, loading } = useTransactions()
   const [searchTerm, setSearchTerm] = useState('')
-  const [filterType, setFilterType] = useState('all') // 'all', 'income', 'expense'
+  const [filterType, setFilterType] = useState('all')
   const [editingId, setEditingId] = useState(null)
-  const [editForm, setEditForm] = useState({ amount: '', category: '', description: '' })
+  const [editForm, setEditForm] = useState({ 
+    amount: '', 
+    category: '', 
+    description: '',
+    type: 'expense' 
+  })
 
   // Filtrar transacciones
   const filteredTransactions = transactions.filter(transaction => {
@@ -25,15 +30,24 @@ export function TransactionList() {
     setEditForm({
       amount: Math.abs(transaction.amount).toString(),
       category: transaction.category,
-      description: transaction.description || ''
+      description: transaction.description || '',
+      type: transaction.amount >= 0 ? 'income' : 'expense'
     })
   }
 
   const handleSaveEdit = async (id) => {
-    // Aquí implementarías la actualización en Supabase
-    console.log('Guardando edición:', id, editForm)
+    try {
+      await updateTransaction(id, editForm)
+      setEditingId(null)
+      // Opcional: mostrar mensaje de éxito
+    } catch (error) {
+      alert('Error al actualizar la transacción: ' + error.message)
+    }
+  }
+
+  const handleCancelEdit = () => {
     setEditingId(null)
-    // await updateTransaction(id, editForm)
+    setEditForm({ amount: '', category: '', description: '', type: 'expense' })
   }
 
   const handleDelete = async (id) => {
@@ -135,36 +149,60 @@ export function TransactionList() {
                     {editingId === transaction.id ? (
                       // Formulario de edición
                       <div className="edit-form">
-                        <input
-                          type="number"
-                          value={editForm.amount}
-                          onChange={(e) => setEditForm(prev => ({ ...prev, amount: e.target.value }))}
-                          placeholder="Monto"
-                        />
-                        <input
-                          type="text"
-                          value={editForm.category}
-                          onChange={(e) => setEditForm(prev => ({ ...prev, category: e.target.value }))}
-                          placeholder="Categoría"
-                        />
-                        <input
-                          type="text"
-                          value={editForm.description}
-                          onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
-                          placeholder="Descripción"
-                        />
-                        <button
-                          onClick={() => handleSaveEdit(transaction.id)}
-                          className="save-btn"
-                        >
-                          Guardar
-                        </button>
-                        <button
-                          onClick={() => setEditingId(null)}
-                          className="cancel-btn"
-                        >
-                          Cancelar
-                        </button>
+                        <div className="edit-form-row">
+                          <select
+                            value={editForm.type}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, type: e.target.value }))}
+                            className="type-select"
+                          >
+                            <option value="income">Ingreso</option>
+                            <option value="expense">Gasto</option>
+                          </select>
+                          
+                          <input
+                            type="number"
+                            value={editForm.amount}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, amount: e.target.value }))}
+                            placeholder="Monto"
+                            className="amount-input"
+                            step="0.01"
+                          />
+                        </div>
+                        
+                        <div className="edit-form-row">
+                          <input
+                            type="text"
+                            value={editForm.category}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, category: e.target.value }))}
+                            placeholder="Categoría"
+                            className="category-input"
+                          />
+                          
+                          <input
+                            type="text"
+                            value={editForm.description}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, description: e.target.value }))}
+                            placeholder="Descripción"
+                            className="description-input"
+                          />
+                        </div>
+                        
+                        <div className="edit-actions">
+                          <button
+                            onClick={() => handleSaveEdit(transaction.id)}
+                            className="save-btn"
+                          >
+                            <Save size={16} />
+                            Guardar
+                          </button>
+                          <button
+                            onClick={handleCancelEdit}
+                            className="cancel-btn"
+                          >
+                            <X size={16} />
+                            Cancelar
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       // Vista normal

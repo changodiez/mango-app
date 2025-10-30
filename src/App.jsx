@@ -1,47 +1,74 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { Auth } from './components/Auth'
 import { Dashboard } from './components/Dashboard'
-import { TransactionManager } from './components/TransactionManager'
 import { TransactionList } from './components/TransactionList'
+import { Menu, X } from 'lucide-react'
 import './App.css'
 
 function Navigation() {
   const { user, signOut } = useAuth()
   const location = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   if (!user) return null
 
   return (
-    <nav className="app-navigation">
-      <div className="nav-brand">
-        <h1>💰 Mango App</h1>
-      </div>
-      <div className="nav-links">
-        <Link 
-          to="/" 
-          className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
-        >
-          📊 Dashboard
-        </Link>
-        <Link 
-          to="/transactions" 
-          className={`nav-link ${location.pathname === '/transactions' ? 'active' : ''}`}
-        >
-          📋 Transacciones
-        </Link>
-      </div>
-      <div className="nav-user">
-        <span>Hola, {user.email}</span>
-        <button onClick={signOut} className="logout-btn">Salir</button>
-      </div>
-    </nav>
+    <>
+      {/* Header fijo siempre visible */}
+      <header className="app-header">
+        <div className="header-left">
+          <button 
+            className="menu-toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          <div className="app-brand">
+            <h1>💰 Mango App</h1>
+          </div>
+        </div>
+        
+        <div className="header-right">
+          <span className="user-welcome">Hola, {user.email}</span>
+          <button onClick={signOut} className="logout-btn">Salir</button>
+        </div>
+      </header>
+
+      {/* Menú lateral que se desliza */}
+      <nav className={`app-navigation ${isMenuOpen ? 'open' : 'closed'}`}>
+        <div className="nav-links">
+          <Link 
+            to="/" 
+            className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            📊 Dashboard
+          </Link>
+          <Link 
+            to="/transactions" 
+            className={`nav-link ${location.pathname === '/transactions' ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            📋 Transacciones
+          </Link>
+        </div>
+      </nav>
+
+      {/* Overlay para cerrar el menú al hacer clic fuera */}
+      {isMenuOpen && (
+        <div 
+          className="menu-overlay"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+    </>
   )
 }
 
 function AppContent() {
   const { user } = useAuth()
-  const location = useLocation()
 
   if (!user) {
     return <Auth />

@@ -10,10 +10,10 @@ export function useTransactions() {
     const isAddingTransactionRef = useRef(false)
 
     const [categories, setCategories] = useState([])
-    const categoriesLoadedRef = useRef(false) // 🔥 Nuevo: prevenir múltiples cargas
+    const categoriesLoadedRef = useRef(false)
 
     const fetchCategories = async () => {
-        if (!user || categoriesLoadedRef.current) return // 🔥 Evitar cargas duplicadas
+        if (!user || categoriesLoadedRef.current) return
 
         try {
             const { data, error } = await supabase
@@ -28,7 +28,7 @@ export function useTransactions() {
                 await createDefaultCategories()
             } else {
                 setCategories(data || [])
-                categoriesLoadedRef.current = true // 🔥 Marcar como cargadas
+                categoriesLoadedRef.current = true
             }
         } catch (error) {
             console.error('Error fetching categories:', error)
@@ -36,7 +36,7 @@ export function useTransactions() {
     }
 
     const createDefaultCategories = async () => {
-        if (categoriesLoadedRef.current) return // 🔥 Evitar creación duplicada
+        if (categoriesLoadedRef.current) return
 
         const defaultCategories = [
             { name: 'Comida', type: 'expense', color: '#FF6B6B' },
@@ -52,13 +52,9 @@ export function useTransactions() {
         ]
 
         try {
-            // Usar insert con onConflict para evitar errores de duplicados
-            const { data, error } = await supabase
+            const { error } = await supabase
                 .from('categories')
                 .insert(defaultCategories.map(cat => ({ ...cat, user_id: user.id })))
-                .select()
-                .onConflict('user_id,name,type') // 🔥 Especificar la constraint de conflicto
-                .ignore() // 🔥 Ignorar inserts que causarían conflictos
 
             if (error && !error.message.includes('duplicate key')) {
                 throw error
@@ -71,7 +67,7 @@ export function useTransactions() {
                 .eq('user_id', user.id)
             
             setCategories(refreshedData || [])
-            categoriesLoadedRef.current = true // 🔥 Marcar como cargadas
+            categoriesLoadedRef.current = true
             
         } catch (error) {
             console.error('Error creating default categories:', error)
@@ -81,13 +77,13 @@ export function useTransactions() {
     useEffect(() => {
         if (user && user.id !== lastUserIdRef.current && !isAddingTransactionRef.current) {
             lastUserIdRef.current = user.id
-            categoriesLoadedRef.current = false // 🔥 Resetear flag al cambiar usuario
+            categoriesLoadedRef.current = false
             fetchTransactions()
             fetchCategories()
         } else if (!user) {
             setTransactions([])
             setCategories([])
-            categoriesLoadedRef.current = false // 🔥 Resetear flag al logout
+            categoriesLoadedRef.current = false
             lastUserIdRef.current = null
         }
     }, [user])
@@ -148,6 +144,45 @@ export function useTransactions() {
         }
     }
 
+    // 🔥 NUEVA FUNCIÓN: Actualizar transacción
+    const updateTransaction = async (id, updates) => {
+        if (!user) throw new Error('No hay usuario autenticado')
+
+        try {
+            // Calcular el monto correcto según el tipo
+            let amount = parseFloat(updates.amount)
+            if (updates.type === 'expense') {
+                amount = -Math.abs(amount)
+            } else if (updates.type === 'income') {
+                amount = Math.abs(amount)
+            }
+
+            const { data, error } = await supabase
+                .from('transactions')
+                .update({
+                    ...updates,
+                    amount: amount,
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', id)
+                .select()
+
+            if (error) throw error
+
+            // Actualizar el estado local
+            setTransactions(prev => 
+                prev.map(transaction => 
+                    transaction.id === id ? data[0] : transaction
+                )
+            )
+
+            return data[0]
+        } catch (error) {
+            console.error('Error updating transaction:', error)
+            throw error
+        }
+    }
+
     const deleteTransaction = async (id) => {
         const { error } = await supabase
             .from('transactions')
@@ -164,6 +199,7 @@ export function useTransactions() {
         loading,
         categories,
         addTransaction,
+        updateTransaction, // 🔥 EXPORTAR la nueva función
         deleteTransaction,
         refetch: fetchTransactions
     }
