@@ -1718,3 +1718,433 @@ html {
   margin-top: 1rem;
   padding-top: 1rem;
 }
+
+/* Agrega esto al final de tu App.css */
+
+/* Selector de período */
+.dashboard-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.period-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  min-height: 50px;
+}
+
+.period-select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.period-select:focus {
+  outline: none;
+}
+
+/* Responsive para controles del dashboard */
+@media (max-width: 768px) {
+  .dashboard-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .period-selector {
+    justify-content: center;
+  }
+}
+
+/* Mejoras para inputs de fecha */
+input[type="date"] {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  background: var(--border-light);
+}
+
+/* Agrega esto al final de tu App.css */
+
+/* Estilos para el botón de categorías en el nav */
+.categories-link {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0;
+  width: 100%;
+}
+
+/* Modal específico para categorías */
+.categories-modal {
+  max-width: 600px;
+  max-height: 80vh;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+/* Ajustes para el CategoryManager en modal */
+.categories-modal .category-manager {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.categories-modal .category-header {
+  padding: 0 1.5rem;
+}
+
+.categories-modal .category-form {
+  padding: 0 1.5rem 1.5rem;
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.categories-modal .categories-list {
+  padding: 1.5rem;
+}
+
+/* Mejoras responsive para el modal de categorías */
+@media (max-width: 768px) {
+  .categories-modal {
+    max-width: 95vw;
+    max-height: 90vh;
+    margin: 1rem;
+  }
+  
+  .categories-modal .category-manager {
+    max-height: 70vh;
+  }
+}
+
+/* Estilos para el formulario de categorías en modal */
+.categories-modal .category-form {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+.categories-modal .category-form input[type="text"] {
+  min-width: 120px;
+}
+
+.categories-modal .category-form input[type="color"] {
+  width: 60px;
+  height: 44px;
+}
+
+.categories-modal .form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.categories-modal .save-btn,
+.categories-modal .cancel-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.categories-modal .save-btn {
+  background: var(--success);
+  color: white;
+}
+
+.categories-modal .cancel-btn {
+  background: var(--border);
+  color: var(--text-secondary);
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 480px) {
+  .categories-modal .category-form {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .categories-modal .form-actions {
+    grid-column: 1;
+    justify-content: stretch;
+  }
+  
+  .categories-modal .save-btn,
+  .categories-modal .cancel-btn {
+    flex: 1;
+  }
+}
+
+/* Agrega esto al final de tu App.css */
+
+/* 🔥 HEADER COMPACTO Y UNIFICADO */
+.dashboard-header-compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.compact-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.balance-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.balance-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.balance-amount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.balance-amount.positive {
+  color: var(--success);
+}
+
+.balance-amount.negative {
+  color: var(--error);
+}
+
+.period-indicator {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.compact-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Selector de período compacto */
+.period-selector-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--background);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  min-height: 44px;
+}
+
+.period-select-compact {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.period-select-compact:focus {
+  outline: none;
+}
+
+/* Botón de agregar compacto */
+.add-transaction-btn-compact {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  box-shadow: var(--shadow);
+}
+
+.add-transaction-btn-compact:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.add-transaction-btn-compact:active {
+  transform: translateY(0);
+}
+
+/* 🔥 CARDS DE RESUMEN COMPACTOS */
+.summary-cards-compact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-card-compact {
+  background: var(--surface);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.summary-card-compact:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.summary-card-compact.income {
+  border-top: 3px solid var(--success);
+}
+
+.summary-card-compact.expense {
+  border-top: 3px solid var(--error);
+}
+
+.summary-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-amount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.summary-amount.income {
+  color: var(--success);
+}
+
+.summary-amount.expense {
+  color: var(--error);
+}
+
+/* 🔥 RESPONSIVE PARA EL DISEÑO COMPACTO */
+@media (max-width: 768px) {
+  .dashboard-header-compact {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .compact-balance {
+    text-align: center;
+  }
+  
+  .balance-main {
+    justify-content: center;
+  }
+  
+  .compact-controls {
+    justify-content: center;
+  }
+  
+  .summary-cards-compact {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .summary-card-compact {
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header-compact {
+    padding: 0.75rem;
+  }
+  
+  .balance-amount {
+    font-size: 1.5rem;
+  }
+  
+  .summary-amount {
+    font-size: 1.1rem;
+  }
+  
+  .period-selector-compact {
+    padding: 0.5rem;
+  }
+  
+  .period-select-compact {
+    min-width: 70px;
+    font-size: 0.8rem;
+  }
+}
+
+/* 🔥 MEJORAS PARA EL SELECTOR EN MÓVIL */
+@media (max-width: 360px) {
+  .compact-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .period-selector-compact {
+    flex: 1;
+    min-width: auto;
+  }
+  
+  .add-transaction-btn-compact {
+    flex-shrink: 0;
+  }
+}

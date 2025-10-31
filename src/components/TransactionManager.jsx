@@ -1,4 +1,3 @@
-// TransactionManager.jsx - Asegurar que el modal funcione correctamente
 import { useState, useEffect } from 'react'
 import { Plus, X } from 'lucide-react'
 import { useTransactions } from '../hooks/useTransactions'
@@ -8,7 +7,14 @@ export function TransactionManager({ isOpen, onClose }) {
     const [category, setCategory] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('expense')
+    const [date, setDate] = useState('') // 🔥 NUEVO: Campo de fecha
     const { addTransaction, loading, categories } = useTransactions()
+
+    // 🔥 NUEVO: Establecer fecha actual por defecto
+    useEffect(() => {
+        const today = new Date().toISOString().split('T')[0]
+        setDate(today)
+    }, [isOpen]) // Se ejecuta cuando se abre el modal
 
     // Filtrar categorías según el tipo seleccionado
     const filteredCategories = categories.filter(cat => cat.type === type)
@@ -25,13 +31,15 @@ export function TransactionManager({ isOpen, onClose }) {
             setDescription('')
             setCategory('')
             setType('expense')
+            const today = new Date().toISOString().split('T')[0]
+            setDate(today)
         }
     }, [isOpen])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        if (!amount || !category) {
+        if (!amount || !category || !date) {
             alert('Por favor completa todos los campos requeridos')
             return
         }
@@ -44,12 +52,11 @@ export function TransactionManager({ isOpen, onClose }) {
                 category,
                 description,
                 type,
-                date: new Date().toISOString().split('T')[0]
+                date: date // 🔥 Usar la fecha seleccionada
             })
 
             window.dispatchEvent(new CustomEvent('transactionAdded'))
             
-            // Cerrar modal después de agregar
             onClose()
             
         } catch (error) {
@@ -57,10 +64,8 @@ export function TransactionManager({ isOpen, onClose }) {
         }
     }
 
-    // Si se usa como modal y no está abierto, no renderizar nada
     if (isOpen !== undefined && !isOpen) return null
 
-    // Si se usa como modal
     if (isOpen !== undefined) {
         return (
             <div className="modal-overlay" onClick={onClose}>
@@ -91,6 +96,18 @@ export function TransactionManager({ isOpen, onClose }) {
                                     Gasto
                                 </button>
                             </div>
+                        </div>
+
+                        {/* 🔥 NUEVO: Campo de fecha */}
+                        <div className="form-group">
+                            <label>Fecha:</label>
+                            <input 
+                                type="date" 
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                required
+                                max={new Date().toISOString().split('T')[0]} // No permitir fechas futuras
+                            />
                         </div>
 
                         <div className="form-group">
@@ -154,7 +171,7 @@ export function TransactionManager({ isOpen, onClose }) {
         )
     }
 
-    // Si se usa en el sidebar (sin modal)
+    // Versión para sidebar (también actualizada con fecha)
     return (
         <div className="transaction-form">
             <h3>Agregar Transacción</h3>
@@ -178,6 +195,18 @@ export function TransactionManager({ isOpen, onClose }) {
                             Gasto
                         </button>
                     </div>
+                </div>
+
+                {/* 🔥 NUEVO: Campo de fecha en sidebar también */}
+                <div className="form-group">
+                    <label>Fecha:</label>
+                    <input 
+                        type="date" 
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                        max={new Date().toISOString().split('T')[0]}
+                    />
                 </div>
 
                 <div className="form-group">
